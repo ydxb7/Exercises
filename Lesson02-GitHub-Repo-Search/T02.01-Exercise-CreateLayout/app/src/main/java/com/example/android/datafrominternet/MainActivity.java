@@ -39,6 +39,6 @@ public class MainActivity extends AppCompatActivity {
         mSearchBoxEditText = (TextView) findViewById(R.id.et_search_box);
         mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
         mSearchBoxEditText = (TextView) findViewById(R.id.tv_github_search_results_json);
-        
+
     }
 }

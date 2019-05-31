@@ -40,8 +40,9 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     private static final String TAG = GreenAdapter.class.getSimpleName();
 
     // TODO (3) Create a final private ListItemClickListener called mOnClickListener
+    private final ListItemClickListener mOnClickListener;
 
-    /*
+    /**
      * The number of ViewHolders that have been created. Typically, you can figure out how many
      * there should be by determining how many list items fit on your screen at once and add 2 to 4
      * to that number. That isn't the exact formula, but will give you an idea of how many
@@ -89,6 +90,9 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
     // TODO (1) Add an interface called ListItemClickListener
     // TODO (2) Within that interface, define a void method called onListItemClick that takes an int as a parameter
+    public interface ListItemClickListener{
+        void onListItemClick(int clickedItemIndex);
+    }
 
     // TODO (4) Add a ListItemClickListener as a parameter to the constructor and store it in mOnClickListener
     /**
@@ -97,8 +101,9 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
      *
      * @param numberOfItems Number of items to display in list
      */
-    public GreenAdapter(int numberOfItems) {
+    public GreenAdapter(int numberOfItems, ListItemClickListener listener) {
         mNumberItems = numberOfItems;
+        mOnClickListener = listener;
         viewHolderCount = 0;
     }
 
@@ -167,7 +172,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
     /**
      * Cache of the children views for a list item.
      */
-    class NumberViewHolder extends RecyclerView.ViewHolder {
+    class NumberViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // Will display the position in the list, ie 0 through getItemCount() - 1
         TextView listItemNumberView;
@@ -187,6 +192,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
             listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
             viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
             // TODO (7) Call setOnClickListener on the View passed into the constructor (use 'this' as the OnClickListener)
+            itemView.setOnClickListener(this);
         }
 
         /**
@@ -199,5 +205,13 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
         }
 
         // TODO (6) Override onClick, passing the clicked item's position (getAdapterPosition()) to mOnClickListener via its onListItemClick method
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            // 其实也可以在这直接显示toast，但是这样不是最优解，
+            // 所以把监听到到clickedPosition传给在MainActivity定义的onListItemClick，让它统一显示toast
+            mOnClickListener.onListItemClick(clickedPosition);
+        }
+
     }
 }

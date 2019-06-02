@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(waitlistRecyclerView);
 
-        
+
     }
 
     /**

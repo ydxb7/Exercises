@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 // TODO (3) Restart the loader to re-query for all tasks after a deletion
                 getSupportLoaderManager().restartLoader(TASK_LOADER_ID, null, MainActivity.this);
-                
+
             }
         }).attachToRecyclerView(mRecyclerView);
 

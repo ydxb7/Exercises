@@ -77,8 +77,10 @@ class Emojifier {
                                         if(faces.size() == 0){
                                             Toast.makeText(context, "No Faces Detected", Toast.LENGTH_SHORT).show();
                                         }
-
-
+                                        // TODO (2): Iterate through the faces, calling getClassifications() for each face.
+                                        for (FirebaseVisionFace face : faces){
+                                            getClassifications(face);
+                                        }
                                     }
                                 })
                         .addOnFailureListener(
@@ -89,11 +91,18 @@ class Emojifier {
                                         Log.d(LOG_TAG, "Failed to detect the faces.");
                                     }
                                 });
-
-        // TODO (2): Iterate through the faces, calling getClassifications() for each face.
-
     }
 
 
     // TODO (1): Create a static method called getClassifications() which logs the probability of each eye being open and that the person is smiling.
+    private static void getClassifications(FirebaseVisionFace face){
+        // Log all the probabilities
+        Log.d(LOG_TAG, "getClassifications: smilingProb = " + face.getSmilingProbability());
+        Log.d(LOG_TAG, "getClassifications: leftEyeOpenProb = "
+                + face.getLeftEyeOpenProbability());
+        Log.d(LOG_TAG, "getClassifications: rightEyeOpenProb = "
+                + face.getRightEyeOpenProbability());
+    }
+
+
 }

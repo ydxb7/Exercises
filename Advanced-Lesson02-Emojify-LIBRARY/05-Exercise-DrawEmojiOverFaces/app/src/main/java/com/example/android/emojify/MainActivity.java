@@ -18,9 +18,12 @@ package com.example.android.emojify;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,16 +33,27 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.face.FirebaseVisionFace;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
+import static com.example.android.emojify.Emojifier.addBitmapToFace;
+import static com.example.android.emojify.Emojifier.whichEmoji;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
@@ -57,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String mTempPhotoPath;
 
-    private Bitmap mResultsBitmap;
+    public Bitmap mResultsBitmap;
 
 
     @Override
@@ -169,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Method for processing the captured image and setting it to the TextView.
      */
+    @SuppressLint("RestrictedApi")
     private void processAndSetImage() {
 
         // Toggle Visibility of the views
@@ -180,11 +195,90 @@ public class MainActivity extends AppCompatActivity {
 
         // Resample the saved image to fit the ImageView
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
-        
+
         // Detect the faces
-        Emojifier.detectFaces(this, mResultsBitmap);
+        Emojifier.detectFacesAndOverlayEmoji(this, mResultsBitmap);
         // TODO (10): Change the method call from detectFaces() to detectFacesAndOverlayEmoji() and assign the result to mResultsBitmap.
-        
+
+        Emojifier.mResult.addOnSuccessListener(
+                new OnSuccessListener<List<FirebaseVisionFace>>() {
+                    @Override
+                    public void onSuccess(List<FirebaseVisionFace> faces) {
+                        // Task completed successfully
+
+                        Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
+
+                        Context context = MainActivity.this;
+
+                        // TODO (7): Create a variable called resultBitmap and initialize it to the original picture bitmap passed into the detectFacesAndOverlayEmoji() method
+                        Bitmap resultBitmap = mResultsBitmap;
+
+                        if (faces.size() == 0) {
+                            Toast.makeText(context, "No Faces Detected", Toast.LENGTH_SHORT).show();
+                        }
+                        for (FirebaseVisionFace face : faces) {
+                            // TODO (4): Create a variable called emojiBitmap to hold the appropriate Emoji bitmap and remove the call to whichEmoji()
+                            // TODO (5): Create a switch statement on the result of the whichEmoji() call, and assign the proper emoji bitmap to the variable you created
+                            Bitmap emojiBitmap;
+
+                            switch (whichEmoji(face)) {
+                                case SMILE:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.smile);
+                                    break;
+                                case FROWN:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.frown);
+                                    break;
+                                case LEFT_WINK:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.leftwink);
+                                    break;
+                                case RIGHT_WINK:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.rightwink);
+                                    break;
+                                case LEFT_WINK_FROWN:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.leftwinkfrown);
+                                    break;
+                                case RIGHT_WINK_FROWN:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.rightwinkfrown);
+                                    break;
+                                case CLOSED_EYE_SMILE:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.closed_smile);
+                                    break;
+                                case CLOSED_EYE_FROWN:
+                                    emojiBitmap = BitmapFactory.decodeResource(context.getResources(),
+                                            R.drawable.closed_frown);
+                                    break;
+                                default:
+                                    emojiBitmap = null;
+                                    Toast.makeText(context, R.string.no_emoji, Toast.LENGTH_SHORT).show();
+                            }
+
+                            // TODO (8): Call addBitmapToFace(), passing in the resultBitmap, the emojiBitmap and the Face  object, and assigning the result to resultBitmap
+                            // Add the emojiBitmap to the proper position in the original image
+                            resultBitmap = addBitmapToFace(resultBitmap, emojiBitmap, face);
+                        }
+                        mResultsBitmap = resultBitmap;
+
+                        // Set the new bitmap to the ImageView
+                        mImageView.setImageBitmap(mResultsBitmap);
+                    }
+                })
+                .addOnFailureListener(
+                new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Task failed with an exception
+                        Log.d(LOG_TAG, "Failed to detect the faces.");
+                    }
+                });
+
+
         // Set the new bitmap to the ImageView
         mImageView.setImageBitmap(mResultsBitmap);
     }

@@ -18,9 +18,12 @@ package com.example.android.emojify;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.util.SparseArray;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,8 +44,11 @@ class Emojifier {
 
     private static final String LOG_TAG = Emojifier.class.getSimpleName();
 
+    private static final float EMOJI_SCALE_FACTOR = .9f;
     private static final double SMILING_PROB_THRESHOLD = .15;
     private static final double EYE_OPEN_PROB_THRESHOLD = .5;
+
+    public static Task<List<FirebaseVisionFace>> mResult;
 
     /**
      * Method for detecting faces in a bitmap.
@@ -50,7 +56,7 @@ class Emojifier {
      * @param context The application context.
      * @param picture The picture in which to detect the faces.
      */
-    public static void detectFaces(final Context context, Bitmap picture) {
+    public static void detectFacesAndOverlayEmoji(final Context context, final Bitmap picture) {
         // TODO (3): Change the name of the detectFaces() method to detectFacesAndOverlayEmoji() and the return type from void to Bitmap
 
         // Configure the face detector
@@ -68,40 +74,12 @@ class Emojifier {
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(picture);
 
         // pass the image to the detectInImage method
-        Task<List<FirebaseVisionFace>> result =
-                detector.detectInImage(image)
-                        .addOnSuccessListener(
-                                new OnSuccessListener<List<FirebaseVisionFace>>() {
-                                    @Override
-                                    public void onSuccess(List<FirebaseVisionFace> faces) {
-                                        // Task completed successfully
-                                        // ...
-                                        Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
+        mResult = detector.detectInImage(image);
 
-                                        // TODO (7): Create a variable called resultBitmap and initialize it to the original picture bitmap passed into the detectFacesAndOverlayEmoji() method
 
-                                        if (faces.size() == 0) {
-                                            Toast.makeText(context, "No Faces Detected", Toast.LENGTH_SHORT).show();
-                                        }
-                                        for (FirebaseVisionFace face : faces) {
-                                            whichEmoji(face);
-
-                                            // TODO (4): Create a variable called emojiBitmap to hold the appropriate Emoji bitmap and remove the call to whichEmoji()
-                                            // TODO (5): Create a switch statement on the result of the whichEmoji() call, and assign the proper emoji bitmap to the variable you created
-                                            // TODO (8): Call addBitmapToFace(), passing in the resultBitmap, the emojiBitmap and the Face  object, and assigning the result to resultBitmap
-                                        }
-                                    }
-                                })
-                        .addOnFailureListener(
-                                new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // Task failed with an exception
-                                        Log.d(LOG_TAG, "Failed to detect the faces.");
-                                    }
-                                });
 
         // TODO (9): Return the resultBitmap
+//        return resultBitmap;
     }
 
 
@@ -112,7 +90,7 @@ class Emojifier {
      *
      * @param face The face for which you pick an emoji.
      */
-    private static void whichEmoji(FirebaseVisionFace face) {
+    static Emoji whichEmoji(FirebaseVisionFace face) {
 
         // TODO (1): Change the return type of the whichEmoji() method from void to Emoji.
 
@@ -155,12 +133,47 @@ class Emojifier {
         Log.d(LOG_TAG, "whichEmoji: " + emoji.name());
 
         // TODO (2): Have the method return the selected Emoji type.
+        return emoji;
     }
 
 
     // TODO (6) Create a method called addBitmapToFace() which takes the background bitmap, the Emoji bitmap, and a Face object as arguments and returns the combined bitmap with the Emoji over the face.
+    public static Bitmap addBitmapToFace(Bitmap backgroundBitmap, Bitmap emojiBitmap, FirebaseVisionFace face) {
+
+        // Initialize the results bitmap to be a mutable copy of the original image
+        Bitmap resultBitmap = Bitmap.createBitmap(backgroundBitmap.getWidth(),
+                backgroundBitmap.getHeight(), backgroundBitmap.getConfig());
+
+        // Scale the emoji so it looks better on the face
+        float scaleFactor = EMOJI_SCALE_FACTOR;
+
+        // Determine the size of the emoji to match the width of the face and preserve aspect ratio
+        int newEmojiWidth = (int) (face.getBoundingBox().width() * scaleFactor);
+        int newEmojiHeight = (int) (emojiBitmap.getHeight() *
+                newEmojiWidth / emojiBitmap.getWidth() * scaleFactor);
+
+
+        // Scale the emoji
+        emojiBitmap = Bitmap.createScaledBitmap(emojiBitmap, newEmojiWidth, newEmojiHeight, false);
+
+        // Determine the emoji position so it best lines up with the face
+        float emojiPositionX = face.getBoundingBox().centerX() - face.getBoundingBox().width() / 2;
+        float emojiPositionY = face.getBoundingBox().centerY() - face.getBoundingBox().height() / 2 + emojiBitmap.getHeight() / 4;
+//        float emojiPositionX =
+//                (face.getBoundingBox().centerX() + face.getBoundingBox().width() / 2) - emojiBitmap.getWidth() / 2;
+//        float emojiPositionY =
+//                (face.getBoundingBox().centerY() + face.getBoundingBox().height() / 2) - emojiBitmap.getHeight() / 3;
+
+        // Create the canvas and draw the bitmaps to it
+        Canvas canvas = new Canvas(resultBitmap);
+        canvas.drawBitmap(backgroundBitmap, 0, 0, null);
+        canvas.drawBitmap(emojiBitmap, emojiPositionX, emojiPositionY, null);
+
+        return resultBitmap;
+    }
+
     // Enum for all possible Emojis
-    private enum Emoji {
+    public enum Emoji {
         SMILE,
         FROWN,
         LEFT_WINK,

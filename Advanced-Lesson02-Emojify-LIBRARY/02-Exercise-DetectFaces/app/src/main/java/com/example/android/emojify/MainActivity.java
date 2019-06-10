@@ -18,6 +18,7 @@ package com.example.android.emojify;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -41,8 +42,10 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO (1): Create a Java class called Emojifier
-        // TODO (2): Create a static method in the Emojifier class called detectFaces() which detects and logs the number of faces in a given bitmap.
+    // TODO (0): Add Firebase to your Android project:
+    //  Add Firebase using the Firebase console,
+    //  Register your app with Firebase,
+    //  Add a Firebase configuration file
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
@@ -172,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Method for processing the captured image and setting it to the TextView.
      */
+    @SuppressLint("RestrictedApi")
     private void processAndSetImage() {
 
         // Toggle Visibility of the views
@@ -185,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
 
         // TODO (3): Call the new detectFaces() method, passing in the resampled bitmap to detect the faces in the picture.
+        Emojifier.detectFaces(this, mResultsBitmap);
 
         // Set the new bitmap to the ImageView
         mImageView.setImageBitmap(mResultsBitmap);
@@ -225,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view The clear button.
      */
+    @SuppressLint("RestrictedApi")
     public void clearImage(View view) {
         // Clear the image and toggle the view visibility
         mImageView.setImageResource(0);

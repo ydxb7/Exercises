@@ -103,9 +103,9 @@ class Emojifier {
         Emoji emoji;
         if (smiling) {
             if (leftEyeClosed && !rightEyeClosed) {
-                emoji = Emoji.LEFT_WINK;
-            } else if (rightEyeClosed && !leftEyeClosed) {
                 emoji = Emoji.RIGHT_WINK;
+            } else if (rightEyeClosed && !leftEyeClosed) {
+                emoji = Emoji.LEFT_WINK;
             } else if (leftEyeClosed) {
                 emoji = Emoji.CLOSED_EYE_SMILE;
             } else {
@@ -113,9 +113,9 @@ class Emojifier {
             }
         } else {
             if (leftEyeClosed && !rightEyeClosed) {
-                emoji = Emoji.LEFT_WINK_FROWN;
-            } else if (rightEyeClosed && !leftEyeClosed) {
                 emoji = Emoji.RIGHT_WINK_FROWN;
+            } else if (rightEyeClosed && !leftEyeClosed) {
+                emoji = Emoji.LEFT_WINK_FROWN;
             } else if (leftEyeClosed) {
                 emoji = Emoji.CLOSED_EYE_FROWN;
             } else {

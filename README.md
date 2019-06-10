@@ -3,13 +3,13 @@
 This is a exercise repository for Developing Android Apps. You can learn more about how to use this repository [here](https://classroom.udacity.com/courses/ud851/lessons/93affc67-3f0b-4f9b-b3a4-a7a26f241a86/concepts/115d08bb-f114-46fa-b693-5c6ce1445c07)
 
 Learin how RecycleView works. Show what views are reused, and when to create a new view.</br>
-![image](https://github.com/ydxb7/Exercises/blob/master/show_Lession3.gif)</br>
+![image](https://github.com/ydxb7/Exercises/blob/master/show_Lession03.gif)</br>
 
 Learn how to pass information to another Activity.</br>
-![image](https://github.com/ydxb7/Exercises/blob/master/show_Lesson4a.gif)</br>
+![image](https://github.com/ydxb7/Exercises/blob/master/show_Lesson04a.gif)</br>
 
 Learn how to use implicit intents. Including open a website, open map application and open email.</br>
-![image](https://github.com/ydxb7/Exercises/blob/master/show_Lesson4b.gif)</br>
+![image](https://github.com/ydxb7/Exercises/blob/master/show_Lesson40b.gif)</br>
 
 Learn the lifecycle of the application, and learn how to store the data in the entire lifecycle.</br>
 ![image](https://github.com/ydxb7/Exercises/blob/master/show_Lesson05a.gif)</br>
@@ -38,3 +38,9 @@ Learn to use ConstraintLayout to design a boarding pass. Use different layout in
 
 Learn how to polish an app. Including color, font, style, different layout for different size of the screens, touch selector.</br>
 ![image](https://github.com/ydxb7/Exercises/blob/master/show_Lesson12.gif)</br>
+
+![image](https://github.com/ydxb7/Exercises/blob/master/show_Advanced01.gif)</br>
+
+![image](https://github.com/ydxb7/Exercises/blob/master/show_Advanced02.gif)</br>
+
+

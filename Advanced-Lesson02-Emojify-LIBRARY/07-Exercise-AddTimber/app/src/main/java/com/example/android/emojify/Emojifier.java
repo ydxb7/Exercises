@@ -40,10 +40,12 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 class Emojifier {
 
     // TODO (3): Change all Log statements to Timber logs and remove the LOG_TAG variable
-    private static final String LOG_TAG = Emojifier.class.getSimpleName();
+//    private static final String LOG_TAG = Emojifier.class.getSimpleName();
 
     private static final float EMOJI_SCALE_FACTOR = .9f;
     private static final double SMILING_PROB_THRESHOLD = .15;
@@ -89,11 +91,9 @@ class Emojifier {
     static Emoji whichEmoji(FirebaseVisionFace face) {
 
         // Log all the probabilities
-        Log.d(LOG_TAG, "getClassifications: smilingProb = " + face.getSmilingProbability());
-        Log.d(LOG_TAG, "getClassifications: leftEyeOpenProb = "
-                + face.getLeftEyeOpenProbability());
-        Log.d(LOG_TAG, "getClassifications: rightEyeOpenProb = "
-                + face.getRightEyeOpenProbability());
+        Timber.d("getClassifications: smilingProb = " + face.getSmilingProbability());
+        Timber.d("getClassifications: leftEyeOpenProb = " + face.getLeftEyeOpenProbability());
+        Timber.d("getClassifications: rightEyeOpenProb = " + face.getRightEyeOpenProbability());
 
         boolean smiling = face.getSmilingProbability() > SMILING_PROB_THRESHOLD;
         boolean leftEyeClosed = face.getLeftEyeOpenProbability() < EYE_OPEN_PROB_THRESHOLD;
@@ -124,7 +124,8 @@ class Emojifier {
         }
 
         // Log the chosen Emoji
-        Log.d(LOG_TAG, "whichEmoji: " + emoji.name());
+//        Log.d(LOG_TAG, "whichEmoji: " + emoji.name());
+        Timber.d("whichEmoji: " + emoji.name());
 
         return emoji;
     }

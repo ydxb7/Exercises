@@ -38,6 +38,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
     // TODO (1): Add Timber dependency
+    implementation 'com.jakewharton.timber:timber:4.5.0'
+
     androidTestImplementation 'junit:junit:4.12'
 }
 

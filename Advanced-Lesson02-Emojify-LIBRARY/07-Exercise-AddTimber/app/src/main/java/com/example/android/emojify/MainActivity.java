@@ -50,13 +50,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.example.android.emojify.Emojifier.addBitmapToFace;
 import static com.example.android.emojify.Emojifier.whichEmoji;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+//    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_STORAGE_PERMISSION = 1;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // TODO (2): Set up Timber
+        Timber.plant(new Timber.DebugTree());
     }
 
     /**
@@ -204,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(List<FirebaseVisionFace> faces) {
                         // Task completed successfully
 
-                        Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
+//                        Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
+                        Timber.d("detectFaces: number of faces = " + faces.size());
 
                         Context context = MainActivity.this;
 
@@ -268,7 +271,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 // Task failed with an exception
-                                Log.d(LOG_TAG, "Failed to detect the faces.");
+//                                Log.d(LOG_TAG, "Failed to detect the faces.");
+                                Timber.d("Failed to detect the faces.");
                             }
                         });
 

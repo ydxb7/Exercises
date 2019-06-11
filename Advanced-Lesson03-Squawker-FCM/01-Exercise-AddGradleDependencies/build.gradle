@@ -8,19 +8,25 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
 
+        // TODO (1) Make a new Firebase project in the Firebase Console and follow the instructions.
+        // The console is here: https://console.firebase.google.com/
+
+        // TODO (2) Add Google Services plugin here
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+
 }
 
 allprojects {
-    String osName = System.getProperty("os.name").toLowerCase()
+    String osName = System.getProperty("os.name").toLowerCase();
     if (osName.contains("windows")) {
         buildDir = "C:/tmp/${rootProject.name}/${project.name}"
     }
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 }
 

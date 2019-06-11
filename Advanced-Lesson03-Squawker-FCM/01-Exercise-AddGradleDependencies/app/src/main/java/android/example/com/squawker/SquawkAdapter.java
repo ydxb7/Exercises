@@ -42,8 +42,7 @@ public class SquawkAdapter extends RecyclerView.Adapter<SquawkAdapter.SquawkView
     private static final long HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final long DAY_MILLIS = 24 * HOUR_MILLIS;
 
-//    This gets called when each new ViewHolder is created. This happens when the RecyclerView
-//    is laid out. Enough ViewHolders will be created to fill the screen and allow for scrolling.
+
     @Override
     public SquawkViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())

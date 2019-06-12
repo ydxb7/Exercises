@@ -59,7 +59,7 @@ public class SquawkFirebaseMessagingService extends FirebaseMessagingService {
     }
 
 
-    // TODO (1) As part of the new Service - Override onMessageReceived. This method will
+    // As part of the new Service - Override onMessageReceived. This method will
     // be triggered whenever a squawk is received. You can get the data from the squawk
     // message using getData(). When you send a test message, this data will include the
     // following key/value pairs:
@@ -94,7 +94,7 @@ public class SquawkFirebaseMessagingService extends FirebaseMessagingService {
 
         Map<String, String> data = remoteMessage.getData();
 
-        // TODO (2) As part of the new Service - If there is message data, get the data using
+        // As part of the new Service - If there is message data, get the data using
         // the keys and do two things with it :
         // 1. Display a notification with the first 30 character of the message
         // 2. Use the content provider to insert a new message into the local database

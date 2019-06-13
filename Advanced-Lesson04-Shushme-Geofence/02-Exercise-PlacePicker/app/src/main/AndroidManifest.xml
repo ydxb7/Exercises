@@ -9,9 +9,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--TODO (5) enabling Google Places Api for Android in the Google Console-->
+        <!--https://console.cloud.google.com/google/maps-apis/api-list?project=shushme-243511-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="insert-your-api-key-here" />
+            android:value="@string/api_key" />
 
         <activity android:name="com.example.android.shushme.MainActivity">
             <intent-filter>

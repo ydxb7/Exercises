@@ -35,7 +35,8 @@ import static com.example.android.mygarden.provider.PlantContract.BASE_CONTENT_U
 import static com.example.android.mygarden.provider.PlantContract.PATH_PLANTS;
 import static com.example.android.mygarden.provider.PlantContract.PlantEntry;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity
+        extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int GARDEN_LOADER_ID = 100;

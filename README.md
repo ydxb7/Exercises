@@ -45,4 +45,8 @@ Learn how to polish an app. Including color, font, style, different layout for d
 
 ![image](https://github.com/ydxb7/Exercises/blob/master/gifs/show_Advanced03.gif)</br>
 
+![image](https://github.com/ydxb7/Exercises/blob/master/gifs/show_Advanced05.gif)</br>
+
+![image](https://github.com/ydxb7/Exercises/blob/master/gifs/show_Advanced06.gif)</br>
+
 

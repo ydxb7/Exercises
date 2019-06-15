@@ -104,6 +104,8 @@ public class PlantWateringService extends IntentService {
                 contentValues,
                 PlantContract.PlantEntry.COLUMN_LAST_WATERED_TIME+">?",
                 new String[]{String.valueOf(timeNow - PlantUtils.MAX_AGE_WITHOUT_WATER)});
+        // Always update widgets after watering plants
+        startActionUpdatePlantWidgets(this);
     }
 
     // TODO (6) 找出最危险的那个植物，显示它的图片

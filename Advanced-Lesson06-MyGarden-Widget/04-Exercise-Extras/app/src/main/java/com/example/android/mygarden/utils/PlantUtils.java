@@ -29,8 +29,8 @@ public class PlantUtils {
     private static final long DAY_MILLISECONDS = HOUR_MILLISECONDS * 24;
 
     public static final long MIN_AGE_BETWEEN_WATER = HOUR_MILLISECONDS * 2; // can water every 2 hours
-    static final long DANGER_AGE_WITHOUT_WATER = HOUR_MILLISECONDS * 6; // in danger after 6 hours
-    public static final long MAX_AGE_WITHOUT_WATER = HOUR_MILLISECONDS * 12; // plants die after 12 hours
+    static final long DANGER_AGE_WITHOUT_WATER = HOUR_MILLISECONDS * 12; // in danger after 6 hours
+    public static final long MAX_AGE_WITHOUT_WATER = HOUR_MILLISECONDS * 24; // plants die after 12 hours
     static final long TINY_AGE = DAY_MILLISECONDS * 0; // plants start tiny
     static final long JUVENILE_AGE = DAY_MILLISECONDS * 1; // 1 day old
     static final long FULLY_GROWN_AGE = DAY_MILLISECONDS * 2; // 2 days old

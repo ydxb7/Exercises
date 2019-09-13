@@ -2,7 +2,9 @@
 
 This is a exercise repository for Developing Android Apps. You can learn more about how to use this repository [here](https://classroom.udacity.com/courses/ud851/lessons/93affc67-3f0b-4f9b-b3a4-a7a26f241a86/concepts/115d08bb-f114-46fa-b693-5c6ce1445c07)
 
-## Video Walkthrough
+# Video Walkthrough
+
+## [course link](https://classroom.udacity.com/courses/ud851)
 
 ### Lesson 03 Green RecyclerView
 Learin how RecycleView works. Show what views are reused, and when to create a new view.</br>
@@ -121,6 +123,8 @@ Learn how to polish an app. Including color, font, style, different layout for d
 2. **CreateNewStyles** - 创建并应用新的样式，使此应用中的 TextView 保持一致性。-CreateNewStyles
 3. **TabletLayout** - 为更大尺寸的平板电脑屏幕创建新的布局 -TabletLayout
 4. **TouchSelector** - 点击按钮效果，用selector -TouchSelector
+
+## [Advanced course link](https://classroom.udacity.com/courses/ud855)
 
 ### Advanced-Lesson01 AndoridMe - Fragment
 ![image](./gifs/show_Advanced01.gif)</br>

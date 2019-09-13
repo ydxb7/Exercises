@@ -32,20 +32,21 @@ Learn how to use implicit intents. Including open a website, open map applicatio
 3. **ShareText** - 隐式intent实施共享
 
 
-### Lesson05a Android - Lifecycle
-Learn the lifecycle of the application, and learn how to store the data in the entire lifecycle.</br>
+### Lesson05a Android - Lifecycle and Persist data
+Learn the lifecycle of the application, and learn how to store the data in the entire lifecycle. 旋转保存数据. android在memory不够时会自动关闭background程序，最后调用的method是 `onStop`, 也就是说不会掉用`onDestroy`, 你要为这些情况做好准备clean resources。 </br>
 ![image](./gifs/show_Lesson05a.gif)</br>
 
 1. **LogLifecycle** - 观察Activity生命周期
 2. **PersistData** - Exercise-PersistData
-3. **FixLifecycleDisplayBug** - 保存Activity的整个生命周期的数据
+3. **FixLifecycleDisplayBug** - 保存Activity的整个生命周期的数据, 用一个static list来保存`onStop`和`onDestroy`
 
-### Lesson05b Smarter GitHub Repo Search
+### Lesson05b Smarter GitHub Repo Search - AsyncTaskLoader
+edge case: 正在下载的时候旋转屏幕，得到的result会传递给一个已经不存在的activity。使用component LoaderManager的Loader，他们的生命超过activity的生命周期来避免重复加载。如果我们需要在background thread load data，使用AsyncTaskLoader
 Learn to use AsyncTaskLoader, and prevent the reload after the user back into the App.</br>
 ![image](./gifs/show_Lesson05b.gif)</br>
 
 1. **SaveResults** - 旋转设备后保存搜索结果
-2. **AddAsyncTaskLoader** - 把AsyncTask改成AsyncTaskLoader
+2. **AsyncTaskLoader 的使用** - 把AsyncTask改成`AsyncTaskLoader`，只处理旋转的加载问题，但是如果用户离开再回来就会重新加载，用3来处理这个问题。使用 `AsyncTaskLoader` 后就不需要用 onSaveInstanceState 记录的结果
 3. **PolishAsyncTask** - 缓存加载器结果，防止客户离开应用后出现查询
 
 ### Lesson06 Visualizer - Preferences

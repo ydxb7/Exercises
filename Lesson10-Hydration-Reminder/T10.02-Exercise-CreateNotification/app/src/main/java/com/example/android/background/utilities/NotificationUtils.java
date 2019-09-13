@@ -24,7 +24,7 @@ public class NotificationUtils {
     private static final int WATER_REMINDER_PENDING_INTENT_ID = 3417;
     private static final String WATER_REMINDER_NOTIFICATION_CHANNEL_ID = "reminder_notification_channel";
 
-    // TODO (7) Create a method called remindUserBecauseCharging which takes a Context.
+    // TODO (7) 创建和显示 notification。Create a method called remindUserBecauseCharging which takes a Context.
     // This method will create a notification for charging. It might be helpful
     // to take a look at this guide to see an example of what the code in this method will look like:
     // https://developer.android.com/training/notify-user/build-notification.html
@@ -70,13 +70,14 @@ public class NotificationUtils {
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             notificationBuilder.setPriority(Notification.PRIORITY_HIGH);
         }
-        // TODO (12) Trigger the notification by calling notify on the NotificationManager.
+        // TODO (12) 显示notification。Trigger the notification by calling notify on the NotificationManager.
         // Pass in a unique ID of your choosing for the notification and notificationBuilder.build()
         notificationManager.notify(WATER_REMINDER_NOTIFICATION_ID, notificationBuilder.build());
     }
 
 
-    // TODO (1) Create a helper method called contentIntent with a single parameter for a Context. It
+    // TODO (1) 点击notification后，需要 start 的 activity
+    //  Create a helper method called contentIntent with a single parameter for a Context. It
     // should return a PendingIntent. This method will create the pending intent which will trigger when
     // the notification is pressed. This pending intent should open up the MainActivity.
     private static PendingIntent contentIntent(Context context) {

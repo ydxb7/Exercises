@@ -89,18 +89,21 @@ Implement a To-Do-List App and use database to store the data.</br>
 
 1. **SetupContentProvider** - 构建和注册自定义内容提供器
 2. **AddURIsToContract** - 向 Contract 添加必要的 URI。
-3. **UriMatcher** - 构建 UriMatcher
+3. **UriMatcher** - 构建 UriMatcher, 用来解析传入的uri
 4. **Insert** - 数据库insert操作
 5. **QueryAllTasks** - 数据库query
 6. **Delete** - 实现ContentProvider删除，但还没和Activity连起来
 7. **SwipeToDelete** - 滑动删除条目
 
 ### Lesson10 Hydration Reminder - IntentServices
-Learn how to use Service and send notifications and schedule the job work in background.</br>
+**如果要加载用于界面的内容，用Loader。如果处理的内容与界面无关就用service**
+
+Learn how to use Service and send notifications and schedule the job work in background.
+
 ![image](./gifs/show_Lesson10.gif)</br>
 
-1. **IntentServices** - 使用service增加水计数器，同时增加preference的水计数器-IntentServices
-2. **Create Notification** - 按下按钮，在顶部弹出通知，PendingIntent，NotificationManager，NotificationCompat.Builder-CreateNotification
+1. **IntentServices 的简单实现** - 点击图片后，使用service增加水计数器，同时增加preference的水计数器。有简单的 preference 和 OnSharedPreferenceChangeListener 的操作。
+2. **Notification 的简单实现** - 按下按钮，在顶部弹出通知，PendingIntent，NotificationManager，NotificationCompat.Builder-CreateNotification
 3. **Notification Actions** - 在弹出的通知上增加2个action：1个是已经喝过水了（水量+1），1个是忽略所有通知。 NotificationCompat.Action， PendingIntent， notificationManager.cancelAll();-NotificationActions
 4. **Periodic Sync With JobDispatcher** - 添加JobService, 创建WaterReminderFirebaseJobService, 它是一个扩展自JobService的类，并且不在主线程上运行充电提醒任务，并增加dependence和修改Manifest -PeriodicSyncWithJobDispatcher <br>
 4.2. schedule刚刚生成的Job，照以下条件安排运行时间：1.每隔 15 分钟运行一次，具有 15 分钟的灵活间隔时间。 2.仅在手机充电时运行。3.安排好后就一直运行，即使用户重启设备也如此---GooglePlayDriver， FirebaseJobDispatcher， dispatcher.newJobBuilder()-PeriodicSyncWithJobDispatcher

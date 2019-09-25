@@ -104,7 +104,7 @@ Learn how to use Service and send notifications and schedule the job work in bac
 
 1. **IntentServices 的简单实现** - 点击图片后，使用service增加水计数器，同时增加preference的水计数器。有简单的 preference 和 OnSharedPreferenceChangeListener 的操作。
 2. **Notification 的简单实现** - 按下按钮，在顶部弹出通知，PendingIntent，NotificationManager，NotificationCompat.Builder-CreateNotification
-3. **Notification Actions** - 在弹出的通知上增加2个action：1个是已经喝过水了（水量+1），1个是忽略所有通知。 NotificationCompat.Action， PendingIntent， notificationManager.cancelAll();-NotificationActions
+3. **Notification Actions** - 在弹出的通知上增加2个action按钮：1个是已经喝过水了（水量+1），1个是忽略所有通知。 NotificationCompat.Action， PendingIntent， notificationManager.cancelAll();-NotificationActions
 4. **Periodic Sync With JobDispatcher** - 添加JobService, 创建WaterReminderFirebaseJobService, 它是一个扩展自JobService的类，并且不在主线程上运行充电提醒任务，并增加dependence和修改Manifest -PeriodicSyncWithJobDispatcher <br>
 4.2. schedule刚刚生成的Job，照以下条件安排运行时间：1.每隔 15 分钟运行一次，具有 15 分钟的灵活间隔时间。 2.仅在手机充电时运行。3.安排好后就一直运行，即使用户重启设备也如此---GooglePlayDriver， FirebaseJobDispatcher， dispatcher.newJobBuilder()-PeriodicSyncWithJobDispatcher
 5. **Charging Broadcast Receiver** - Dynamic Broadcast receiver: 设备在充电是插头显示红色，否则就是灰色 --- 使用BroadcastReceiver, IntentFilte -ChargingBroadcastReceiver

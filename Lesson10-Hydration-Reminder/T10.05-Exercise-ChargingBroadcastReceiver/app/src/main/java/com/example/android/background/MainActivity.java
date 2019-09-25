@@ -174,8 +174,5 @@ public class MainActivity extends AppCompatActivity implements
             boolean isCharging = action.equals(Intent.ACTION_POWER_CONNECTED);
             showCharging(isCharging);
         }
-
-
-
     }
 }

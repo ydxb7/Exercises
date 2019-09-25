@@ -19,6 +19,7 @@ package com.example.android.teatime;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -47,15 +48,19 @@ public class OrderSummaryActivityTest {
 
     // TODO (2) Add the rule that indicates we want to use Espresso-Intents APIs in functional UI tests
     @Rule
-    public ActivityTestRule<OrderSummaryActivity> mActivityTestRule =
-            new ActivityTestRule<>(OrderSummaryActivity.class);
+    public IntentsTestRule<OrderSummaryActivity> mActivityRule = new IntentsTestRule<>(
+            OrderSummaryActivity.class);
 
     // TODO (3) Finish this method which runs before each test and will stub all external
     // intents so all external intents will be blocked
     @Before
     public void stubAllExternalIntents() {
+        // 默认情况下，Espresso Intent 不会插桩任何 Intent；相反，每次运行测试时，都必须设置插桩。
+        // 方法 stubAllExternalIntents() 确保所有外部 Intent 都被屏蔽了。
         // By default Espresso Intents does not stub any Intents.  Stubbing needs to be setup before
         // every test run. In this case all external Intents will be blocked.
+        // not(isInternal()) 检查该 intent 的软件包是否与测试的目标软件包不匹配。如果不匹配，则做出以下响应：
+
         intending(not(isInternal())).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, null));
     }
 

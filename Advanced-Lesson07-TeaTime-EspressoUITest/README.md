@@ -121,9 +121,63 @@ public class OrderSummaryActivityTest {
 
 ## Idling Resources
 
+[IdlingResourceSample](https://github.com/googlesamples/android-testing/tree/master/ui/espresso/IdlingResourceSample) 
+
+[Udacity 讲解](https://classroom.udacity.com/courses/ud855/lessons/f0084cc7-2cbc-4b8e-8644-375e8c927167/concepts/d08f4f11-b8ff-4913-9766-5fb610a59de7)
+
 If there is a process running on the main thread, and then some background work happens. Espresso waits until the app is idle before it continues to run the test. Idel: the divice isn't doing anything.(No UI events in the current message queue. No more tasks in the default AsyncTask thread pool.)
 
 例如测试在 background 连接网络获取信息，需要处理时间。如果设置了 idling resources，那么在 AsyncTask 开始时 Espresso 将暂停测试，知道后台任务结束。
 
 
+We also need `SimpleIdlingResource` and `idlingResource.setIdleState(true)` in non-test code.
 
+```
+@RunWith(AndroidJUnit4.class)
+@LargeTest
+public class IdlingResourceMenuActivityTest {
+
+    /**
+     * The ActivityTestRule is a rule provided by Android used for functional testing of a single
+     * activity. The activity that will be tested, MenuActivity in this case, will be launched
+     * before each test that's annotated with @Test and before methods annotated with @Before.
+     *
+     * The activity will be terminated after the test and methods annotated with @After are
+     * complete. This rule allows you to directly access the activity during the test.
+     */
+    @Rule
+    public ActivityTestRule<MenuActivity> mActivityTestRule =
+            new ActivityTestRule<>(MenuActivity.class);
+
+    private IdlingResource mIdlingResource;
+
+
+    // Registers any resource that needs to be synchronized with Espresso before the test is run.
+    @Before
+    public void registerIdlingResource() {
+        mIdlingResource = mActivityTestRule.getActivity().getIdlingResource();
+        // To prove that the test fails, omit this call:
+        Espresso.registerIdlingResources(mIdlingResource);
+    }
+
+    // Test that the gridView with Tea objects appears and we can click a gridView item
+    @Test
+    public void idlingResourceTest() {
+        onData(anything()).inAdapterView(withId(R.id.tea_grid_view)).atPosition(0).perform(click());
+    }
+
+    // Unregister resources when not needed to avoid malfunction
+    @After
+    public void unregisterIdlingResource() {
+        if (mIdlingResource != null) {
+            Espresso.unregisterIdlingResources(mIdlingResource);
+        }
+    }
+}
+```
+
+## Espresso Web 
+
+[Example](https://github.com/googlesamples/android-testing/tree/master/ui/espresso/WebBasicSample)
+
+## Espresso RecylcerView 测试
